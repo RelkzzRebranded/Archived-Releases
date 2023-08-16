@@ -1,4 +1,8 @@
+if getgenv().PropertySpooferAlreadyExecuted then return end
+
 getgenv().objsthatIsSpoofed = {}
+
+getgenv().PropertySpooferAlreadyExecuted = true
 
 getgenv().spoof = function(obj, property, value)
 	local s = pcall(function()
