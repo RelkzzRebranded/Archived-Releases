@@ -27,7 +27,7 @@ end
 
 local __index; __index = hookmetamethod(game, "__index", function(o, p)
 	local t = findwithintable(o, p)
-	if t ~= nil then
+	if not checkcaller() and t ~= nil then
 		return t[3]
 	end
 
