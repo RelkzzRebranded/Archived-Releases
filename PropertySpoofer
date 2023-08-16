@@ -1,4 +1,4 @@
-_G.objs = {}
+getgenv().objs = {}
 
 getgenv().spoof = function(obj, property, value)
 	local s = pcall(function()
@@ -25,16 +25,12 @@ getgenv().unspoof = function(obj, property)
 	end
 end
 
-
-local mt = getrawmetatable(game)
-setreadonly(mt, false)
-old = mt.__index
-
-mt.__index = newcclosure(function(o, p)
+local __index; __index = hookmetamethod(game, "__index", function(o, p)
 	local t = findwithintable(o, p)
 	if t ~= nil then
 		return t[3]
 	end
-	
-	return old(o, p)
+
+	return __index(o, p)
 end)
+
