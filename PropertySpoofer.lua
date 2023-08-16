@@ -1,16 +1,16 @@
-getgenv().objs = {}
+getgenv().objsthatIsSpoofed = {}
 
 getgenv().spoof = function(obj, property, value)
 	local s = pcall(function()
 		local lol = obj[property]
 	end)
 	if s then
-		table.insert(_G.objs, {obj, property, value})
+		table.insert(objsthatIsSpoofed, {obj, property, value})
 	end
 end
 
 getgenv().findwithintable = function(o, p)
-	for i, v in pairs(_G.objs) do
+	for i, v in pairs(objsthatIsSpoofed) do
 		if table.find(v, o) and table.find(v, p) then
 			return v
 		end
@@ -21,7 +21,7 @@ end
 getgenv().unspoof = function(obj, property)
 	local lol = findwithintable(obj, property)
 	if lol then
-		table.remove(_G.objs, table.find(_G.objs, lol))
+		table.remove(objsthatIsSpoofed, table.find(objsthatIsSpoofed, lol))
 	end
 end
 
